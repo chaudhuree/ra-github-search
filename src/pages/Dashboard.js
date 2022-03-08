@@ -10,6 +10,7 @@ const Dashboard = () => {
             <Info/>
             <User/>
             <Repos/>
+            hello
         </main>
     );
 };
