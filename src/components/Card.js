@@ -1,8 +1,18 @@
 import React from 'react';
-import { GithubContext } from '../context/context';
 import styled from 'styled-components';
-import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
+import { useGlobalContext } from '../context/context';
 const Card = () => {
+  const { githubUser } = useGlobalContext() ;
+  const {
+    avatar_url,
+    html_url,
+    name,
+    company,
+    blog,
+    bio,
+    location,
+    twitter_username,
+  } = githubUser;
   return <h2>card component</h2>;
 };
 const Wrapper = styled.article`
