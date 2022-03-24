@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdBusiness, MdLink, MdLocationOn } from 'react-icons/md';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/context';
 const Card = () => {
@@ -13,7 +14,29 @@ const Card = () => {
     location,
     twitter_username,
   } = githubUser;
-  return <h2>card component</h2>;
+  return <Wrapper>
+  <header>
+    <img src={avatar_url} alt={name} />
+    <div>
+      <h4>{name}</h4>
+      <p>@{twitter_username || 'twitter'}</p>
+    </div>
+    <a href={html_url}>follow</a>
+  </header>
+  <p className='bio'>{bio}</p>
+  <div className='links'>
+    <p>
+      <MdBusiness></MdBusiness> {company}
+    </p>
+    <p>
+      <MdLocationOn></MdLocationOn> {location || 'earth'}
+    </p>
+    <a href={`https://${blog}`}>
+      <MdLink></MdLink>
+      {blog}
+    </a>
+  </div>
+</Wrapper>;
 };
 const Wrapper = styled.article`
   background: var(--clr-white);
