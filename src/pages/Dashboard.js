@@ -1,16 +1,14 @@
 import React from 'react';
-import { Info, Repos, User, Search, Navbar } from '../components';
-import loadingImage from '../images/preloader.gif';
-import {useGlobalContext} from "../context/context";
+import { Info, User } from '../components';
 const Dashboard = () => {
     return (
         <main>
-            <Navbar/>
-            <Search/>
+            {/* <Navbar/> */}
+            {/* <Search/> */}
             <Info/>
             <User/>
-            <Repos/>
-            hello
+            {/* <Repos/> */}
+            
         </main>
     );
 };
