@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GithubContext } from '../context/context';
-import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
+import { useGlobalContext } from '../context/context';
+import { ExampleChart } from './Charts';
+
 const Repos = () => {
-  return <h2>repos component</h2>;
+  const {repos}=useGlobalContext();
+  return <ExampleChart></ExampleChart>
 };
 
 const Wrapper = styled.div`
@@ -27,7 +29,8 @@ const Wrapper = styled.div`
   svg {
     width: 100% !important;
     border-radius: var(--radius) !important;
-  }
+  }import ExampleChart from './Charts/ExampleChart';
+
 `;
 
 export default Repos;

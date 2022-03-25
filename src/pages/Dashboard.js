@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info, User } from '../components';
+import { Info, Repos, User } from '../components';
 const Dashboard = () => {
     return (
         <main>
@@ -7,7 +7,7 @@ const Dashboard = () => {
             {/* <Search/> */}
             <Info/>
             <User/>
-            {/* <Repos/> */}
+            <Repos/>
             
         </main>
     );
