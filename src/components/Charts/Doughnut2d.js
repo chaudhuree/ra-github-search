@@ -22,7 +22,7 @@ ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 const ChartComponent=({data})=>{
   
 const chartConfigs = {
-  type: "candy", // The chart type
+  type: "doughnut2d", // The chart type
   width: "100%", // Width of the chart
   height: "400", // Height of the chart
   donoghnutRadius: "45%",
@@ -31,16 +31,9 @@ const chartConfigs = {
     // Chart Configuration
     chart: {
       //Set the chart caption
-      caption: "Countries With Most Oil Reserves [2017-18]",
-      //Set the chart subcaption
-      subCaption: "In MMbbl = One Million barrels",
-      //Set the x-axis name
-      xAxisName: "Country",
-      //Set the y-axis name
-      yAxisName: "Reserves (MMbbl)",
-      numberSuffix: "%",
-      //Set the theme for your chart
-      theme: "fusion"
+      caption: "Stars Per Language",
+      
+      theme: "candy"
     },
     // Chart Data
     data: data
