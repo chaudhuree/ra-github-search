@@ -1,26 +1,33 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useGlobalContext } from '../context/context';
-import { ExampleChart } from './Charts';
+import React from "react";
+import styled from "styled-components";
+import { useGlobalContext } from "../context/context";
+import { Pie3D } from "./Charts";
 
 const Repos = () => {
-  const {repos}=useGlobalContext();
+  const { repos } = useGlobalContext();
   const chartData = [
     {
       label: "HTML",
-      value: "100"
+      value: "46",
     },
     {
       label: "css",
-      value: "80"
+      value: "39",
     },
     {
       label: "JavaScript",
-      value: "60"
-    }
+      value: "14",
+    },
   ];
-  
-  return <ExampleChart data={chartData}></ExampleChart>
+
+  return (
+    <section className="section">
+      <Wrapper className="section-centre">
+        {/* <ExampleChart data={chartData}></ExampleChart> */}
+        <Pie3D data={chartData}></Pie3D>
+      </Wrapper>
+    </section>
+  );
 };
 
 const Wrapper = styled.div`
