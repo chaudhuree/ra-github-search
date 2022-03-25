@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useGlobalContext } from "../context/context";
-import { Doughnut2D, Pie3D } from "./Charts";
+import { Bar3D, Column3D, Doughnut2D, Pie3D } from "./Charts";
 
 const Repos = () => {
   const { repos } = useGlobalContext();
@@ -38,6 +38,24 @@ const Repos = () => {
     })
     .slice(0, 5);
 
+ // stars, forks
+
+ let { stars, forks } = repos.reduce(
+  (total, item) => {
+    const { stargazers_count, name, forks } = item;
+    total.stars[stargazers_count] = { label: name, value: stargazers_count };
+    total.forks[forks] = { label: name, value: forks };
+    return total;
+  },
+  {
+    stars: {},
+    forks: {},
+  }
+);
+
+stars = Object.values(stars).slice(-5).reverse();
+forks = Object.values(forks).slice(-5).reverse();
+
   // dummy data
   // const chartData = [
   //   {
@@ -59,9 +77,9 @@ const Repos = () => {
       <Wrapper className="section-center">
         {/* <ExampleChart data={chartData}></ExampleChart> */}
         <Pie3D data={mostUsed}></Pie3D>
-        <div>hi</div>
+        <Bar3D data={stars}></Bar3D>
         <Doughnut2D data={mostPopular}></Doughnut2D>
-        <div>there</div>
+        <Column3D data={forks}></Column3D>
       </Wrapper>
     </section>
   );
@@ -89,7 +107,8 @@ const Wrapper = styled.div`
   svg {
     width: 100% !important;
     border-radius: var(--radius) !important;
-  }
+  }import { Column2D } from 'fusioncharts/fusioncharts.charts';
+
 `;
 
 export default Repos;
