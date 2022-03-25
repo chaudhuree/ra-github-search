@@ -5,7 +5,22 @@ import { ExampleChart } from './Charts';
 
 const Repos = () => {
   const {repos}=useGlobalContext();
-  return <ExampleChart></ExampleChart>
+  const chartData = [
+    {
+      label: "HTML",
+      value: "100"
+    },
+    {
+      label: "css",
+      value: "80"
+    },
+    {
+      label: "JavaScript",
+      value: "60"
+    }
+  ];
+  
+  return <ExampleChart data={chartData}></ExampleChart>
 };
 
 const Wrapper = styled.div`
