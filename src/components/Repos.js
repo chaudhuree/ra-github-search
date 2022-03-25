@@ -3,28 +3,50 @@ import styled from "styled-components";
 import { useGlobalContext } from "../context/context";
 import { Pie3D } from "./Charts";
 
+
 const Repos = () => {
   const { repos } = useGlobalContext();
-  const chartData = [
-    {
-      label: "HTML",
-      value: "46",
-    },
-    {
-      label: "css",
-      value: "39",
-    },
-    {
-      label: "JavaScript",
-      value: "14",
-    },
-  ];
 
+  const languages = repos.reduce((total, item) => {
+    const { language } = item;
+    if (!language) return total;
+    if (!total[language]) {
+      total[language] = { label: language, value: 1};
+    } else {
+      total[language] = {
+        ...total[language],
+        value: total[language].value + 1
+      };
+    }
+    return total;
+  }, {});
+console.log(languages);
+  const mostUsed = Object.values(languages) //converts object to array
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .slice(0, 5);   //to showcase most used 5 languages 
+// dummy data
+  // const chartData = [
+  //   {
+  //     label: "HTML",
+  //     value: "46",
+  //   },
+  //   {
+  //     label: "css",
+  //     value: "39",
+  //   },
+  //   {
+  //     label: "JavaScript",
+  //     value: "14",
+  //   },
+  // ];
+// console.log(mostUsed);
   return (
     <section className="section">
-      <Wrapper className="section-centre">
+      <Wrapper className="section-center">
         {/* <ExampleChart data={chartData}></ExampleChart> */}
-        <Pie3D data={chartData}></Pie3D>
+        <Pie3D data={mostUsed}></Pie3D>
       </Wrapper>
     </section>
   );
@@ -51,7 +73,7 @@ const Wrapper = styled.div`
   svg {
     width: 100% !important;
     border-radius: var(--radius) !important;
-  }import ExampleChart from './Charts/ExampleChart';
+  }
 
 `;
 
