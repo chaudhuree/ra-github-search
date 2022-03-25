@@ -1,32 +1,44 @@
 import React from "react";
 import styled from "styled-components";
 import { useGlobalContext } from "../context/context";
-import { Pie3D } from "./Charts";
-
+import { Doughnut2D, Pie3D } from "./Charts";
 
 const Repos = () => {
   const { repos } = useGlobalContext();
 
   const languages = repos.reduce((total, item) => {
-    const { language } = item;
+    const { language, stargazers_count } = item;
     if (!language) return total;
     if (!total[language]) {
-      total[language] = { label: language, value: 1};
+      total[language] = { label: language, value: 1, stars: stargazers_count };
     } else {
       total[language] = {
         ...total[language],
-        value: total[language].value + 1
+        value: total[language].value + 1,
+        stars: total[language].stars + stargazers_count,
       };
     }
     return total;
   }, {});
-console.log(languages);
+  console.log(languages);
   const mostUsed = Object.values(languages) //converts object to array
     .sort((a, b) => {
       return b.value - a.value;
     })
-    .slice(0, 5);   //to showcase most used 5 languages 
-// dummy data
+    .slice(0, 5); //to showcase most used 5 languages
+
+  // most stars per language
+
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return b.stars - a.stars;
+    })
+    .map((item) => {
+      return { ...item, value: item.stars }; //6:Assigning stars value to value property
+    })
+    .slice(0, 5);
+
+  // dummy data
   // const chartData = [
   //   {
   //     label: "HTML",
@@ -41,12 +53,15 @@ console.log(languages);
   //     value: "14",
   //   },
   // ];
-// console.log(mostUsed);
+  // console.log(mostUsed);
   return (
     <section className="section">
       <Wrapper className="section-center">
         {/* <ExampleChart data={chartData}></ExampleChart> */}
         <Pie3D data={mostUsed}></Pie3D>
+        <div></div>
+        <Doughnut2D data={mostPopular}></Doughnut2D>
+        <div></div>
       </Wrapper>
     </section>
   );
@@ -64,7 +79,7 @@ const Wrapper = styled.div`
     grid-template-columns: 2fr 3fr;
   }
 
-    /* these are the codes for charts responsiveness */
+  /* these are the codes for charts responsiveness */
   div {
     width: 100% !important;
   }
@@ -75,7 +90,6 @@ const Wrapper = styled.div`
     width: 100% !important;
     border-radius: var(--radius) !important;
   }
-
 `;
 
 export default Repos;

@@ -33,7 +33,7 @@ const chartConfigs = {
 
       theme: "fusion",
       decimals:0,
-      pieRadius: "35%"
+      pieRadius: "45%"
     },
     // Chart Data
     data: data
