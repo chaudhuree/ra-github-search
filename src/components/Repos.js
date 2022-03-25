@@ -64,6 +64,7 @@ const Wrapper = styled.div`
     grid-template-columns: 2fr 3fr;
   }
 
+    /* these are the codes for charts responsiveness */
   div {
     width: 100% !important;
   }
