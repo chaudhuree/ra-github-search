@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import mockFollowers from "./mockData.js/mockFollowers";
 import mockRepos from "./mockData.js/mockRepos";
 import mockUser from "./mockData.js/mockUser";
@@ -16,6 +17,26 @@ export const GithubProvider = ({ children }) => {
   // error
   const [error, setError] = useState({ show: false, msg: '' });
 
+  //  check rate
+  const checkRequests = () => {
+    axios(`${rootUrl}/rate_limit`)
+      .then(({ data }) => {
+        let {
+          rate: { remaining },
+        } = data;
+        // remaining=0;
+        setRequests(remaining);
+        if (remaining === 0) {
+          toggleError(true, 'sorry, you have exceeded your hourly rate limit!');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  function toggleError(show = false, msg = '') {
+    setError({ show, msg });
+  }
+  // error
+  useEffect(checkRequests, []);
   return (
       <GithubContext.Provider value={{
         githubUser,
