@@ -1,13 +1,16 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import mockFollowers from "./mockData.js/mockFollowers";
-import mockRepos from "./mockData.js/mockRepos";
-import mockUser from "./mockData.js/mockUser";
+import axios from 'axios';
+import React, { useEffect, useState ,useContext} from 'react';
+import mockFollowers from './mockData.js/mockFollowers';
+import mockRepos from './mockData.js/mockRepos';
+import mockUser from './mockData.js/mockUser';
 
-const rootUrl = "https://api.github.com";
+const rootUrl = 'https://api.github.com';
 
 const GithubContext = React.createContext();
-export const GithubProvider = ({ children }) => {
+
+// Provider, Consumer - GithubContext.Provider
+
+const GithubProvider = ({ children }) => {
   const [githubUser, setGithubUser] = useState(mockUser);
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
@@ -15,7 +18,7 @@ export const GithubProvider = ({ children }) => {
   const [requests, setRequests] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   // error
-  const [error, setError] = useState({ show: false, msg: "" });
+  const [error, setError] = useState({ show: false, msg: '' });
 
   const searchGithubUser = async (user) => {
     toggleError();
@@ -26,19 +29,14 @@ export const GithubProvider = ({ children }) => {
     if (response) {
       setGithubUser(response.data);
       const { login, followers_url } = response.data;
-      // axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) => {
-      //   setRepos(response.data);
-      // });
-      // axios(`${followers_url}?per_page=100`).then((response) => {
-      //   setFollowers(response.data);
-      // });
+
       await Promise.allSettled([
         axios(`${rootUrl}/users/${login}/repos?per_page=100`),
         axios(`${followers_url}?per_page=100`),
       ])
         .then((results) => {
           const [repos, followers] = results;
-          const status = "fulfilled";
+          const status = 'fulfilled';
           if (repos.status === status) {
             setRepos(repos.value.data);
           }
@@ -48,7 +46,7 @@ export const GithubProvider = ({ children }) => {
         })
         .catch((err) => console.log(err));
     } else {
-      toggleError(true, "there is no user with that username");
+      toggleError(true, 'there is no user with that username');
     }
     checkRequests();
     setIsLoading(false);
@@ -61,19 +59,19 @@ export const GithubProvider = ({ children }) => {
         let {
           rate: { remaining },
         } = data;
-        // remaining=0;
         setRequests(remaining);
         if (remaining === 0) {
-          toggleError(true, "sorry, you have exceeded your hourly rate limit!");
+          toggleError(true, 'sorry, you have exceeded your hourly rate limit!');
         }
       })
       .catch((err) => console.log(err));
   };
-  function toggleError(show = false, msg = "") {
+  function toggleError(show = false, msg = '') {
     setError({ show, msg });
   }
   // error
-  useEffect(checkRequests, []); //6: put chackRequests like this so that no need to add some dependency
+  useEffect(checkRequests, []);
+
   return (
     <GithubContext.Provider
       value={{
@@ -90,7 +88,8 @@ export const GithubProvider = ({ children }) => {
     </GithubContext.Provider>
   );
 };
-
 export const useGlobalContext = () => {
   return useContext(GithubContext);
 };
+export { GithubProvider, GithubContext };
+
